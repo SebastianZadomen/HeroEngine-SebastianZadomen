@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\isard\\Documents\\Programacion\\HeroEngineActivity\\HeroEngine-SebastianZadomen\\HeroEngine\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7742969D-F03D-48CC-93B5-57E13F727FE2}|HeroEngine.csproj|c:\\users\\isard\\documents\\programacion\\heroengineactivity\\heroengine-sebastianzadomen\\heroengine\\model\\hero.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7742969D-F03D-48CC-93B5-57E13F727FE2}|HeroEngine.csproj|solutionrelative:model\\hero.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7742969D-F03D-48CC-93B5-57E13F727FE2}|HeroEngine.csproj|c:\\users\\isard\\documents\\programacion\\heroengineactivity\\heroengine-sebastianzadomen\\heroengine\\model\\heroes\\warrior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7742969D-F03D-48CC-93B5-57E13F727FE2}|HeroEngine.csproj|solutionrelative:model\\heroes\\warrior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7742969D-F03D-48CC-93B5-57E13F727FE2}|HeroEngine.csproj|c:\\users\\isard\\documents\\programacion\\heroengineactivity\\heroengine-sebastianzadomen\\heroengine\\model\\heroes\\hero.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7742969D-F03D-48CC-93B5-57E13F727FE2}|HeroEngine.csproj|solutionrelative:model\\heroes\\hero.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7742969D-F03D-48CC-93B5-57E13F727FE2}|HeroEngine.csproj|c:\\users\\isard\\documents\\programacion\\heroengineactivity\\heroengine-sebastianzadomen\\heroengine\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -31,27 +35,41 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Warrior.cs",
+              "DocumentMoniker": "C:\\Users\\isard\\Documents\\Programacion\\HeroEngineActivity\\HeroEngine-SebastianZadomen\\HeroEngine\\Model\\Heroes\\Warrior.cs",
+              "RelativeDocumentMoniker": "Model\\Heroes\\Warrior.cs",
+              "ToolTip": "C:\\Users\\isard\\Documents\\Programacion\\HeroEngineActivity\\HeroEngine-SebastianZadomen\\HeroEngine\\Model\\Heroes\\Warrior.cs",
+              "RelativeToolTip": "Model\\Heroes\\Warrior.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAIwDEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T19:20:48.274Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Hero.cs",
-              "DocumentMoniker": "C:\\Users\\isard\\Documents\\Programacion\\HeroEngineActivity\\HeroEngine-SebastianZadomen\\HeroEngine\\Model\\Hero.cs",
-              "RelativeDocumentMoniker": "Model\\Hero.cs",
-              "ToolTip": "C:\\Users\\isard\\Documents\\Programacion\\HeroEngineActivity\\HeroEngine-SebastianZadomen\\HeroEngine\\Model\\Hero.cs",
-              "RelativeToolTip": "Model\\Hero.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\isard\\Documents\\Programacion\\HeroEngineActivity\\HeroEngine-SebastianZadomen\\HeroEngine\\Model\\Heroes\\Hero.cs",
+              "RelativeDocumentMoniker": "Model\\Heroes\\Hero.cs",
+              "ToolTip": "C:\\Users\\isard\\Documents\\Programacion\\HeroEngineActivity\\HeroEngine-SebastianZadomen\\HeroEngine\\Model\\Heroes\\Hero.cs",
+              "RelativeToolTip": "Model\\Heroes\\Hero.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAADwv0sAAACiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-04T20:06:03.942Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\isard\\Documents\\Programacion\\HeroEngineActivity\\HeroEngine-SebastianZadomen\\HeroEngine\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\isard\\Documents\\Programacion\\HeroEngineActivity\\HeroEngine-SebastianZadomen\\HeroEngine\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-04T17:27:17.614Z"
+              "WhenOpened": "2026-04-04T17:27:17.614Z",
+              "EditorCaption": ""
             }
           ]
         }

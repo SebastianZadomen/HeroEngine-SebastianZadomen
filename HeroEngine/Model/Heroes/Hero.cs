@@ -5,7 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HeroEngine.Model
+namespace HeroEngine.Model.Heroes
 {
     public abstract class Hero
     {
@@ -29,9 +29,11 @@ namespace HeroEngine.Model
             }
         }
 
-        private int HealthMax => HealthBase + (HealthScale * Level);
+        protected int HealthMax => HealthBase + HealthScale * Level;
+
+
         public bool IsAlive => Health > 0;
-        public int Damage => DamageBase + (DamageBase * Level);
+        public int Damage => DamageBase + DamageBase * Level;
 
         public Hero(string name, int level )
         {
@@ -40,7 +42,7 @@ namespace HeroEngine.Model
             Health = HealthMax;
 
         }
-        public Hero(string name) : this(name, 1)
+        public Hero(string name) : this(name, 0)
         {
             
         }
@@ -64,9 +66,18 @@ namespace HeroEngine.Model
             return true;
         }
         
-       
+        public int DamageCritical()
+        {
+            var random = new Random();
+            
 
-       
+            int damageCritical = random.Next(0, 2) == 1 ? Damage * 2 : Damage;
+
+            Console.WriteLine(damageCritical.Equals(Damage)?$"Inflige {damageCritical} de daño.(Golpe normal)" : $"Inflige {damageCritical} de daño.(GolpeCritico)");
+            return damageCritical;
+
+        }
+        
 
         protected int HealthControl(int health)
         {
@@ -80,7 +91,7 @@ namespace HeroEngine.Model
             foreach (char i in name)
             {
 
-                if ((i >= 'a' && i <= 'z') || (i >= 'A' && i <= 'Z'))
+                if (i >= 'a' && i <= 'z' || i >= 'A' && i <= 'Z')
                 {
                     result += i;
                 }
@@ -99,7 +110,7 @@ namespace HeroEngine.Model
         }
         public override string ToString()
         {
-            return $"[{GetType()}] Name : {Name} | Level : {Level} | Damage : {Damage}";
+            return $"[{GetType().Name}] Name : {Name} | Level : {Level} | Health : {Health}/{HealthMax}  | Damage : {Damage}";
         }
     }
 }
