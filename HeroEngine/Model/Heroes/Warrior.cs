@@ -23,7 +23,7 @@ namespace HeroEngine.Model.Heroes
             {
                 return false;
             }
-            
+
             Console.WriteLine("Grito de batalla: «¡Por Bytecroft! ¡Mi código compila a la primera!»");
             Console.Write($"{Name} ataca !!, ");
             target.TakeDamage(DamageCritical());

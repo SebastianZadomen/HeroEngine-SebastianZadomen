@@ -25,7 +25,7 @@ namespace HeroEngine.Model.Heroes
 
         private int _health;
         public int Health { get { return _health; } set {
-                _health = HealthControl(value);         
+                _health = StatsControl(value, HealthMax);         
             }
         }
 
@@ -79,9 +79,9 @@ namespace HeroEngine.Model.Heroes
         }
         
 
-        protected int HealthControl(int health)
+        protected int StatsControl(int valueInput, int maxValue)
         {
-            return Math.Clamp(health, 0, HealthMax);
+            return Math.Clamp(valueInput, 0, maxValue);
 
         }
         protected string ValidateName(string name)
