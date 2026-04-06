@@ -44,7 +44,6 @@ namespace HeroEngine.Model.Heroes
 
             return true;
         } 
-
         public override bool TakeDamage(int damage)
         {
             if (!base.TakeDamage(damage))
