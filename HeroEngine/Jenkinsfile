@@ -33,7 +33,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'dotnet test "HeroEngine/HeroEngine.sln" --no-build --collect:"XPlat Code Coverage" --DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
+                bat 'dotnet test "HeroEngine/HeroEngine.sln" --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
             }
         }
 
