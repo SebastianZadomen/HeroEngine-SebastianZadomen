@@ -10,32 +10,36 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Preparar SonarScanner') {
+       stage('Preparar SonarScanner') {
             steps {
-                bat 'dotnet tool install --global dotnet-sonarscanner || exit 0'
+                bat 'dotnet tool install dotnet-sonarscanner --tool-path .\\tools || exit 0'
             }
         }
+
         stage('SonarQube Begin') {
             steps {
-                withSonarQubeEnv(SONAR_SERVER) {
-                    bat "dotnet sonarscanner begin /k:\"${SONAR_PROJECT_KEY}\" /d:sonar.cs.opencover.reportsPaths=\"**/coverage.opencover.xml\""
+                withSonarQubeEnv('SonarLocal') { 
+                    bat '.\\tools\\dotnet-sonarscanner begin /k:"HeroEngine" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"'
                 }
             }
         }
+
         stage('Build') {
             steps {
                 bat 'dotnet build'
             }
         }
+
         stage('Test') {
             steps {
                 bat 'dotnet test --no-build --collect:"XPlat Code Coverage" --DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
             }
         }
+
         stage('SonarQube End') {
             steps {
-                withSonarQubeEnv(SONAR_SERVER) {
-                    bat "dotnet sonarscanner end /d:sonar.token=\"%SONAR_TOKEN%\""
+                withSonarQubeEnv('SonarLocal') {
+                    bat '.\\tools\\dotnet-sonarscanner end'
                 }
             }
         }
