@@ -10,7 +10,8 @@ pipeline {
                 checkout scm
             }
         }
-       stage('Preparar SonarScanner') {
+        
+        stage('Preparar SonarScanner') {
             steps {
                 bat 'dotnet tool install dotnet-sonarscanner --tool-path .\\tools || exit 0'
             }
@@ -26,13 +27,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'dotnet build'
+                bat 'dotnet build "HeroEngine/HeroEngine.sln"'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'dotnet test --no-build --collect:"XPlat Code Coverage" --DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
+                bat 'dotnet test "HeroEngine/HeroEngine.sln" --no-build --collect:"XPlat Code Coverage" --DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
             }
         }
 
