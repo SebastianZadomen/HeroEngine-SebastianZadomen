@@ -6,20 +6,27 @@ using System.Threading.Tasks;
 
 namespace HeroEngine.Model.Heroes
 {
-    public class Rogue : Hero
+    public class Rogue : Hero , IEnergy
     {
         
         public const int SneakAttackScale = 5;
         public const int Multiplier = 2;
+        public const int EnergyBase = 100;
+        public const int EnergyScaled = 10;
+
 
         public int Dagas { get; set; }
         public int SneakAttack => SneakAttackScale * Level ;
+        public int Energy { get; set; }
+        public int EnergyMax => EnergyBase + (EnergyScaled * Level);
         public Rogue(string name) : base(name)
         {
+            Energy = 100;
         }
 
-        public Rogue(string name, int level) : base(name, level)
+        public Rogue(string name, int level, int energy) : base(name, level)
         {
+            Energy = energy;
             Dagas = 0;
         }
         public override bool Attack(Hero target)

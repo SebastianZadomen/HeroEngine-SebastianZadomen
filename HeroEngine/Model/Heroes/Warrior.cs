@@ -6,16 +6,27 @@ using System.Threading.Tasks;
 
 namespace HeroEngine.Model.Heroes
 {
-    public class Warrior : Hero
+    public class Warrior : Hero , IEnergy
     {
         public const int ArmorBase = 3;
+        public const int EnergyBase = 100;
+        public const int EnergyScaled = 10;
+
         public int Armor => ArmorBase + (ArmorBase * Level );
+
+        public int Energy { get; set; }
+        public int EnergyMax => EnergyBase + (EnergyScaled * Level);
+
         public Warrior(string name) : base(name)
         {
+            Energy = 100;
+            
         }
 
-        public Warrior(string name, int level) : base(name, level)
+        public Warrior(string name, int level, int energy) : base(name, level)
         {
+            Energy = energy;
+           
         }
         public override bool Attack(Hero target)
         {
@@ -43,7 +54,7 @@ namespace HeroEngine.Model.Heroes
         }
         public override string ToString()
         {
-            return base.ToString() + $" Armor : {Armor} ";
+            return base.ToString() + $" Armor : {Armor}  | Energia : {Energy}/{EnergyMax}";
         }
     }
 }

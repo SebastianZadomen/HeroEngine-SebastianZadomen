@@ -11,5 +11,6 @@ public class HeroEngineProgram
         Console.WriteLine(pj2.ToString());
 
         pj1.Attack(pj2);
+        pj1.ShowSkills();
     }
 }

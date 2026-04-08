@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HeroEngine.Model.Heroes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,30 +7,35 @@ using System.Threading.Tasks;
 
 namespace HeroEngine.Model.Ability
 {
-    public abstract class Ability
+    public abstract class Skill
     {
+      
         public string Name { get; set; }
         public RarityType Rarity { get; set;  }
-        private int Cost { get; set; } 
+        public TypeSkills Type { get; init; }
+        protected int PointUseBase { get; init; }
+        protected int Cost { get; set; } 
        
-        private int PointsUse { get; set; }
+        protected int PointsUse { get; set; }
 
-        public Ability(string name, RarityType type, int cost, int pointUse)
+        public Skill(string name, RarityType type, int cost, int pointUse)
         {
             Name = name;
             Rarity = type;
-            Cost = cost;
+            Cost = cost;     
             PointsUse = pointUse;
+            PointUseBase = PointsUse;
         }
 
-        public Ability(string name)
+        public Skill(string name)
         {
             Name = name;
             Rarity = RarityTypeRandom();
             Cost = CalculatedCost(Rarity);        
-            PointsUse = CalculatedPointUse(Rarity); 
+            PointsUse = CalculatedPointUse(Rarity);
+            PointUseBase = PointsUse;
         }
-        public abstract void AbilityActivation();
+        public abstract void AbilityActivation(Hero target, Hero caster);
 
         public static RarityType RarityTypeRandom()
         {
@@ -51,6 +57,8 @@ namespace HeroEngine.Model.Ability
 
             return RarityType.Comun;
         }
+        public abstract string GetSkillEffect();
+
         public int CalculatedCost(RarityType rarity)
         {
             if (rarity == RarityType.Legendario) return 20;
