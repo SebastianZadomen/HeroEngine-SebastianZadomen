@@ -19,7 +19,7 @@ namespace HeroEngine.Model.Ability
         }
         public SupportSkills(string name) : base(name)
         {
-            Healing = CalculatedRandomHealing();
+            Healing = CalculatedRandomHealing(Rarity);
             Type = TypeSkills.Soporte;
         }
 
@@ -36,11 +36,16 @@ namespace HeroEngine.Model.Ability
         {
             return $"Curacion: {Healing}";
         }
-        public int CalculatedRandomHealing()
+    
+        public int CalculatedRandomHealing(RarityType rarity)
         {
-            var numRandom = new Random();
+            var random = new Random();
+            int healing = 10;
+            if (rarity == RarityType.Legendario) return healing = random.Next(20, 25);
+            if (rarity == RarityType.Raro) return healing = random.Next(15, 20);
+            if (rarity == RarityType.Epico) return healing = random.Next(10, 15);
+            return healing = 5;
 
-            return numRandom.Next(10, 20); 
         }
     }
 }
