@@ -29,6 +29,17 @@ namespace HeroEngine.Model.Ability
             
             target.TakeDamage(Damage);
             PointsUse -= 1;
+
+            if (caster is IEnergy energyUser)
+            {
+                energyUser.Energy -= Cost;
+            }
+            else if (caster is Mage mg)
+            {
+                mg.Mana -= Cost;
+
+            }
+
         }
         public override string GetSkillEffect()
         {

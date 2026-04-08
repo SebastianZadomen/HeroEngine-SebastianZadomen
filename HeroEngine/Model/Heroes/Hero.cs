@@ -182,7 +182,8 @@ namespace HeroEngine.Model.Heroes
                     }
                     else
                     {
-                        Skills[num].AbilityActivation(target, this);
+                        int index = num - 1;
+                        Skills[index].AbilityActivation(target, this);
                         /* if ((Skills[num].Type == TypeSkills.Ataque)  && Skills[num] is AttackSkills atk)
                          {
                              target.TakeDamage(atk.Damage);
