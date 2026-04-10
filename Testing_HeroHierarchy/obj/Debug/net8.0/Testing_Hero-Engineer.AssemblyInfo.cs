@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("HeroEngine")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Testing_Hero-Engineer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+32de2fd51880078cd8e5fe82f9aecee42a2eb0d0")]
-[assembly: System.Reflection.AssemblyProductAttribute("HeroEngine")]
-[assembly: System.Reflection.AssemblyTitleAttribute("HeroEngine")]
+[assembly: System.Reflection.AssemblyProductAttribute("Testing_Hero-Engineer")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Testing_Hero-Engineer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Generado por la clase WriteCodeFragment de MSBuild.

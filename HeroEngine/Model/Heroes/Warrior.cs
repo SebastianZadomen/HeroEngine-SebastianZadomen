@@ -19,13 +19,13 @@ namespace HeroEngine.Model.Heroes
 
         public Warrior(string name) : base(name)
         {
-            Energy = 100;
+            Energy = EnergyMax;
             
         }
 
-        public Warrior(string name, int level, int energy) : base(name, level)
+        public Warrior(string name, int level) : base(name, level)
         {
-            Energy = energy;
+            Energy = EnergyMax;
            
         }
         public override bool Attack(Hero target)
@@ -48,7 +48,7 @@ namespace HeroEngine.Model.Heroes
             }
 
 
-            Health -= Math.Max(0, damage - Armor);
+            Health -= Math.Max(0, damage - (Armor + Defense));
             Console.WriteLine($"{Name} has recibido {damage} de daño pero tu armadura te ha protegido {Armor} de daño\nHP : {Health}/{HealthMax}");
             return true;
         }

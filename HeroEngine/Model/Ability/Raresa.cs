@@ -8,10 +8,10 @@ namespace HeroEngine.Model.Ability
 {
     public enum RarityType
     {
-        Comun,
-        Raro,
-        Epico,
-        Legendario
+        Comun = 0,
+        Raro = 1,
+        Epico = 2,
+        Legendario = 3
             
     }
 }

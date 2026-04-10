@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NgK+/uc84II=",
+  "dgSpecHash": "NxBKs9Jy2fs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\sebas\\Documents\\Programacion1\\C#\\HeroEngine-SebastianZadomen\\Testing_HeroHierarchy\\Testing_HeroHierarchy.csproj",
+  "projectFilePath": "C:\\Users\\sebas\\Documents\\Programacion1\\C#\\HeroEngine-SebastianZadomen\\Testing_HeroHierarchy\\Testing_Hero-Engineer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\sebas\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\sebas\\.nuget\\packages\\microsoft.codecoverage\\17.8.0\\microsoft.codecoverage.17.8.0.nupkg.sha512",

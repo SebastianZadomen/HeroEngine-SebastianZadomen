@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using HeroEngine.Model.Ability;
 
@@ -24,7 +26,7 @@ namespace HeroEngine.Model.Heroes
             }
         }
         public int Defense { get; set; }
-        public Skill[] Skills { get; set; } = new Skill[3];
+        public Skill[] Skills { get; set; } = new Skill[4];
         public int Level { get; set; }
 
         private int _health;
@@ -130,7 +132,7 @@ namespace HeroEngine.Model.Heroes
 
             for (int i = 0; i < totalSlots; i++)
             {
-                string typeText = Skills[i] != null ? $"[{Skills[i].Type}]" : "[ VACÍO ]";
+                string typeText = Skills[i] != null ? $"[{Skills[i].Type}][{Skills[i].Rarity}]" : "[ VACÍO ]";
                 Console.Write($"║ {typeText.PadRight(26)} ║  "); 
             }
             Console.WriteLine();
@@ -163,6 +165,7 @@ namespace HeroEngine.Model.Heroes
         }
 
         public void UseSkills(Hero target) {
+            OrderSkills();
             ShowSkills();
             int num = 0;
             do
@@ -201,6 +204,78 @@ namespace HeroEngine.Model.Heroes
 
             }
             while (!(num > 0 && num < 5));
+        }
+
+        public void OrderSkills()
+        {
+            for (int i = 0; i < Skills.Length - 1; i++)
+            {
+                for (int j = Skills.Length - 1; j > i; j--)
+                {
+                    if (Skills[j - 1] == null || (Skills[j] != null && Skills[j].Rarity > Skills[j - 1].Rarity))
+                    {
+                        Skill temp = Skills[j];
+                        Skills[j] = Skills[j - 1];
+                        Skills[j - 1] = temp;
+                    }
+                }
+            }
+        }
+
+        public void AddSkill(Skill skill)
+        {
+            for (int i = 0; i < Skills.Length; i++)
+            {
+                if (Skills[i] != null && Skills[i].Name == skill.Name)
+                {
+                    Console.WriteLine($"Ya tienes equipada la habilidad: {skill.Name}");
+                    return;
+                }
+            }
+
+            bool skillAdded = false;
+            for (int i = 0; i < Skills.Length; i++)
+            {
+                if (Skills[i] == null)
+                {
+                    Skills[i] = skill;
+                    skillAdded = true;
+                    Console.WriteLine($"Has equipado: {skill.Name}");
+                    i = Skills.Length + 1; 
+                }
+            }
+
+            if (!skillAdded)
+            {
+                Console.Clear();
+                Console.WriteLine("Tu barra de habilidades está llena. Quieres sobreescribir alguna habilidad (1-2 cualquier otra opcion sera tomada como no): \n1.Si\n2.No");
+                bool Op = (Console.ReadLine() == "1");
+                if (Op)
+                {
+                    OverwriteSkills(skill);
+                }
+                
+            }
+
+            OrderSkills();
+        }
+
+        public void OverwriteSkills(Skill skill)
+        {
+            int op = 0;
+            do
+            {
+                Console.Clear();
+                ShowSkills();
+                bool validateNum = int.TryParse(Console.ReadLine(), out op);
+                if (op < 0 || op > 4)
+                {
+                    Console.WriteLine("Error : opcion invalida ");
+                }
+            } while (op < 0 || op > 4);
+
+            op -= 1;
+            Skills[op] = skill;    
             
 
         }

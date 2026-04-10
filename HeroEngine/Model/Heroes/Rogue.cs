@@ -21,12 +21,12 @@ namespace HeroEngine.Model.Heroes
         public int EnergyMax => EnergyBase + (EnergyScaled * Level);
         public Rogue(string name) : base(name)
         {
-            Energy = 100;
+            Energy = EnergyMax;
         }
 
-        public Rogue(string name, int level, int energy) : base(name, level)
+        public Rogue(string name, int level) : base(name, level)
         {
-            Energy = energy;
+            Energy = EnergyMax;
             Dagas = 0;
         }
         public override bool Attack(Hero target)
@@ -58,8 +58,9 @@ namespace HeroEngine.Model.Heroes
                 return false;
             }
 
-            Health -= Math.Max(0, damage );
+            Health -= Math.Max(0, damage - Defense);
             Console.WriteLine($"{Name} has recibido {damage} de daño. \nHP : {Health}/{HealthMax}");
+            Defense = 0;
             return true;
         }
         public override string ToString()

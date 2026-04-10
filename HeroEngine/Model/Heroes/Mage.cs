@@ -26,10 +26,11 @@ namespace HeroEngine.Model.Heroes
         }
         public Mage(string name) : base(name)
         {
-            
+            Mana = ManaMax;
+
         }
 
-       
+
         public override bool Attack(Hero target)
         {
             if (!base.Attack(target))
@@ -60,8 +61,9 @@ namespace HeroEngine.Model.Heroes
             }
 
 
-            Health -= Math.Max(0, damage);
+            Health -= Math.Max(0, damage - Defense );
             Console.WriteLine($"{Name} has recibido {damage} de daño. \nHP : {Health}/{HealthMax}");
+            Defense = 0;
             return true;
         }
         public override string ToString()
