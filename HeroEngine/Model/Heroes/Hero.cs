@@ -17,6 +17,8 @@ namespace HeroEngine.Model.Heroes
         public const int DamageBase = 5;
         public const int HealthBase = 100;
         public const int HealthScale = 25;
+        public const int ExpBase = 100;
+        public const int ExpScale = 20;
 
 
         private string _name;
@@ -35,9 +37,18 @@ namespace HeroEngine.Model.Heroes
             }
         }
 
+        private int _exp;
+
+        public int Experience
+        {
+            get { return _exp; }
+            private set { _exp = value; }
+        }
+
+
         protected int HealthMax => HealthBase + HealthScale * Level;
 
-
+        protected int ExpMax => ExpBase + (ExpScale * Level);
         public bool IsAlive => Health > 0;
         public int Damage => DamageBase + DamageBase * Level;
 
@@ -49,6 +60,7 @@ namespace HeroEngine.Model.Heroes
             Defense = 0;
 
         }
+    
         public Hero(string name) : this(name, 0)
         {
             Defense = 0;
@@ -84,7 +96,19 @@ namespace HeroEngine.Model.Heroes
             return damageCritical;
 
         }
-        
+        public void AddExperience(int expAdd)
+        {
+            _exp += expAdd; 
+
+           
+            while (_exp >= ExpMax)
+            {
+                _exp -= ExpMax; 
+                Level++;
+                Console.WriteLine($"¡{Name} ha subido al nivel {Level}!");
+                Health = HealthMax; 
+            }
+        }
 
         protected int StatsControl(int valueInput, int maxValue)
         {
