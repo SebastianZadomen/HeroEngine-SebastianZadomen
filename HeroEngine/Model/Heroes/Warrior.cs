@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HeroEngine.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,28 +29,29 @@ namespace HeroEngine.Model.Heroes
             Energy = EnergyMax;
            
         }
-        public override bool Attack(Hero target)
+        public override bool Attack(Hero target, CombatLog log)
         {
-            if (!base.Attack(target))
+            if (!base.Attack(target, log))
             {
                 return false;
             }
 
-            Console.WriteLine("Grito de batalla: «¡Por Bytecroft! ¡Mi código compila a la primera!»");
-            Console.Write($"{Name} ataca !!, ");
-            target.TakeDamage(DamageCritical());
-            return true; 
+            log.LogMessage("Grito de batalla: «¡Por Bytecroft! ¡Mi código compila a la primera!»");
+            log.LogMessage($"{Name} ataca !!");
+            target.TakeDamage(DamageCritical(log), log);
+            return true;
         }
-        public override bool TakeDamage(int damage)
+        public override bool TakeDamage(int damage, CombatLog log)
         {
-            if (!base.TakeDamage(damage))
+            if (!base.TakeDamage(damage, log))
             {
                 return false;
             }
-
 
             Health -= Math.Max(0, damage - (Armor + Defense));
-            Console.WriteLine($"{Name} has recibido {damage} de daño pero tu armadura te ha protegido {Armor} de daño\nHP : {Health}/{HealthMax}");
+            log.LogMessage($"{Name} ha recibido {damage} de daño pero tu armadura te ha protegido {Armor} de daño\nHP : {Health}/{HealthMax}");
+            log.LogMessage("======================================================================");
+
             return true;
         }
         public override string ToString()

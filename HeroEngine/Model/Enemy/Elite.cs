@@ -1,4 +1,5 @@
 ﻿using HeroEngine.Model.Heroes;
+using HeroEngine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +20,13 @@ namespace HeroEngine.Model.Enemy
         {
             return new Random().Next(0, 8) == 4;
         }
-        public override void ActionsPerTurn(Hero[] teamPlayer)
+        public override void ActionsPerTurn(Hero[] teamPlayer, CombatLog log)
         {
             ReduceCooldowns();
 
             int heroTarget = ComprovationHpTeamPlayer(teamPlayer);
 
-            EnemyUseSkills(teamPlayer[heroTarget]);
+            EnemyUseSkills(teamPlayer[heroTarget], log);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HeroEngine.Utils;
 
 namespace HeroEngine.Model.Ability
 {
@@ -35,8 +36,7 @@ namespace HeroEngine.Model.Ability
             PointsUse = CalculatedPointUse(Rarity);
             PointUseBase = PointsUse;
         }
-        public abstract void AbilityActivation(Hero target, Hero caster);
-
+        public abstract void AbilityActivation(Hero target, Hero caster, CombatLog log);
         public static RarityType RarityTypeRandom()
         {
             var random = new Random();

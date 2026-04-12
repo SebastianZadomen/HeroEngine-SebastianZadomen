@@ -1,5 +1,6 @@
 ﻿using HeroEngine.Model.Ability;
 using HeroEngine.Model.Heroes;
+using HeroEngine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +22,14 @@ namespace HeroEngine.Model.Enemy
         {
             return new Random().Next(0, 5) == 2;
         }
-        public override void ActionsPerTurn(Hero[] teamPlayer)
+        public override void ActionsPerTurn(Hero[] teamPlayer, CombatLog log)
         {
             ReduceCooldowns();
             int heroTarget = ComprovationHpTeamPlayer(teamPlayer);
-            EnemyUseSkills(teamPlayer[heroTarget]);
+            EnemyUseSkills(teamPlayer[heroTarget], log);
         }
 
-        public override bool EnemyUseSkills(Hero player)
+        public override bool EnemyUseSkills(Hero player,CombatLog log )
         {
             if (Health < (HealthMax * 0.20))
             {
@@ -40,14 +41,14 @@ namespace HeroEngine.Model.Enemy
 
                         ControlPositionAbilityCooldowns(i + 1);
 
-                        Skills[i].AbilityActivation(this, this);
+                        Skills[i].AbilityActivation(this, this, log);
 
                         return true; 
                     }
                 }
             }
 
-            return base.EnemyUseSkills(player);
+            return base.EnemyUseSkills(player,log);
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using HeroEngine.Model.Ability;
 using HeroEngine.Model.Heroes;
+using HeroEngine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HeroEngine.Model.Enemy
 {
@@ -24,8 +26,7 @@ namespace HeroEngine.Model.Enemy
         {
             return new Random().Next(0, 12) == 4;
         }
-        public abstract void ActionsPerTurn(Hero[] teamPlayer);
-
+        public abstract void ActionsPerTurn(Hero[] teamPlayer, CombatLog log);
         public bool ControlPositionAbilityCooldowns(int positionUse)
         {
             int index = positionUse - 1;
@@ -75,22 +76,23 @@ namespace HeroEngine.Model.Enemy
         public int ComprovationHpTeamPlayer(Hero[] teamPlayer)
         {
             int positionPlayerTarget = 0;
+            int minHealth = int.MaxValue; 
 
-            for (int i = 0; i < teamPlayer.Length; i++){
+            for (int i = 0; i < teamPlayer.Length; i++)
+            {
                 if (teamPlayer[i] != null && teamPlayer[i].IsAlive)
                 {
-                    positionPlayerTarget = i;
+                    if (teamPlayer[i].Health < minHealth)
+                    {
+                        minHealth = teamPlayer[i].Health;
+                        positionPlayerTarget = i;
+                    }
                 }
-                if (!teamPlayer[positionPlayerTarget].IsAlive || teamPlayer[i].Health < teamPlayer[positionPlayerTarget].Health)
-                {
-                    positionPlayerTarget = i;
-                }
-
             }
+
             return positionPlayerTarget;
         }
-
-        public virtual bool EnemyUseSkills(Hero player)
+        public virtual bool EnemyUseSkills(Hero player, CombatLog log)
         {
             
             for (int i = Skills.Length - 1; i >= 0; i--)
@@ -101,7 +103,7 @@ namespace HeroEngine.Model.Enemy
                     {
                         Console.WriteLine($"¡{Name} ve la oportunidad y remata a {player.Name}!");
                         ControlPositionAbilityCooldowns(i + 1);
-                        Skills[i].AbilityActivation(player, this);
+                        Skills[i].AbilityActivation(player, this,log);
                         return true; 
                     }
                 }
@@ -114,15 +116,30 @@ namespace HeroEngine.Model.Enemy
                 {
                     Console.WriteLine($"{Name} usa su mejor habilidad disponible: {Skills[i].Name}.");
                     ControlPositionAbilityCooldowns(i + 1);
-                    Skills[i].AbilityActivation(player, this);
+                    Skills[i].AbilityActivation(player, this, log);
                     return true; 
                 }
             }
 
             Console.WriteLine($"{Name} no tiene habilidades listas. ¡Se lanza con un ataque básico!");
-            this.Attack(player);
+            this.Attack(player, log);
             return false;
         }
+        public override bool TakeDamage(int damage, CombatLog log)
+        {
+            if (!base.TakeDamage(damage, log))
+            {
+                return false;
+            }
+
+            Health -= Math.Max(0, damage );
+            log.LogMessage($"{Name} ha recibido {damage} de daño. \nHP : {Health}/{HealthMax}");
+            
+            return true;
+        }
+    
+
+           
     }
 
 }
