@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using HeroEngine.Model.Ability;
-
+using HeroEngine.Utils;
 
 namespace HeroEngine.Model.Heroes
 {
@@ -17,8 +17,10 @@ namespace HeroEngine.Model.Heroes
         public const int DamageBase = 5;
         public const int HealthBase = 100;
         public const int HealthScale = 25;
+        public const int ExpBase = 100;
+        public const int ExpScale = 20;
 
-
+        public static int Keys { get; set; } = 0;
         private string _name;
         public string Name { get { return _name; } set {
                 _name = ValidateName(value);
@@ -35,9 +37,18 @@ namespace HeroEngine.Model.Heroes
             }
         }
 
+        private int _exp;
+
+        public int Experience
+        {
+            get { return _exp; }
+            private set { _exp = value; }
+        }
+
+
         protected int HealthMax => HealthBase + HealthScale * Level;
 
-
+        protected int ExpMax => ExpBase + (ExpScale * Level);
         public bool IsAlive => Health > 0;
         public int Damage => DamageBase + DamageBase * Level;
 
@@ -49,42 +60,52 @@ namespace HeroEngine.Model.Heroes
             Defense = 0;
 
         }
+    
         public Hero(string name) : this(name, 0)
         {
             Defense = 0;
         }
 
-        public virtual bool Attack(Hero target)
+        public virtual bool Attack(Hero target, CombatLog log)
         {
             if (!IsAlive)
             {
-                Console.WriteLine($"{Name} está muerto y no puede atacar.");
+                log.LogMessage($"{Name} está muerto y no puede atacar.");
                 return false;
             }
             return true;
         }
-        public virtual bool TakeDamage(int damage)
+        public virtual bool TakeDamage(int damage, CombatLog log)
         {
             if (!IsAlive)
             {
-                Console.WriteLine($"{Name} está muerto y no puede recibir daño.");
+                log.LogMessage($"{Name} está muerto y no puede recibir daño.");
                 return false;
             }
             return true;
         }
-        
-        public int DamageCritical()
+
+        public int DamageCritical(CombatLog log)
         {
             var random = new Random();
-            
-
             int damageCritical = random.Next(0, 2) == 1 ? Damage * 2 : Damage;
 
-            Console.WriteLine(damageCritical.Equals(Damage)?$"Inflige {damageCritical} de daño.(Golpe normal)" : $"Inflige {damageCritical} de daño.(GolpeCritico)");
+            log.LogMessage(damageCritical.Equals(Damage) ? $"Inflige {damageCritical} de daño.(Golpe normal)" : $"Inflige {damageCritical} de daño.(GolpeCritico)");
             return damageCritical;
-
         }
-        
+        public void AddExperience(int expAdd)
+        {
+            _exp += expAdd; 
+
+           
+            while (_exp >= ExpMax)
+            {
+                _exp -= ExpMax; 
+                Level++;
+                Console.WriteLine($"¡{Name} ha subido al nivel {Level}!");
+                Health = HealthMax; 
+            }
+        }
 
         protected int StatsControl(int valueInput, int maxValue)
         {
@@ -161,13 +182,16 @@ namespace HeroEngine.Model.Heroes
             for (int i = 0; i < totalSlots; i++) Console.Write("╚════════════════════════════╝  ");
             Console.WriteLine();
 
-            Console.WriteLine("\nSeleccione un Slot de Habilidad (1-4): ");
         }
 
-        public void UseSkills(Hero target) {
+        public void UseSkills(Hero target, CombatLog log)
+        {
             OrderSkills();
             ShowSkills();
+            Console.WriteLine("\nSeleccione un Slot de Habilidad (1-4): ");
+
             int num = 0;
+            bool validSelection = false;
             do
             {
                 bool validate = int.TryParse(Console.ReadLine(), out num);
@@ -176,35 +200,24 @@ namespace HeroEngine.Model.Heroes
                 {
                     Console.WriteLine("Número incorrecto, elige un slot del 1 al 4...");
                 }
-                else {
-                    num -= 1;
-                    if (Skills[num] == null)
-                    {
-                        Console.WriteLine("Esta vacio, no haces nada");
+                else
+                {
+                    int index = num - 1;
 
+                    if (Skills[index] == null)
+                    {
+                        log.LogMessage("Está vacío, no haces nada.");
+                        validSelection = true;
                     }
                     else
                     {
-                        int index = num - 1;
-                        Skills[index].AbilityActivation(target, this);
-                        /* if ((Skills[num].Type == TypeSkills.Ataque)  && Skills[num] is AttackSkills atk)
-                         {
-                             target.TakeDamage(atk.Damage);
-                         }
-                         if ((Skills[num].Type == TypeSkills.Soporte) && Skills[num] is AttackSkills cure)
-                         {
-                             Health = cure.Cure;
-                         }
-                         if ((Skills[num].Type == TypeSkills.Defensa) && Skills[num] is AttackSkills def)
-                         {
-                             Defense = def;
-                         }*/
+                        Skills[index].AbilityActivation(target, this, log);
+                        validSelection = true;
                     }
                 }
-
-            }
-            while (!(num > 0 && num < 5));
+            } while (!validSelection);
         }
+
 
         public void OrderSkills()
         {

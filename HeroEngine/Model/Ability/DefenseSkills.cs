@@ -1,4 +1,5 @@
 ﻿using HeroEngine.Model.Heroes;
+using HeroEngine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,12 @@ namespace HeroEngine.Model.Ability
 
         }
 
-        public override void AbilityActivation(Hero target, Hero caster)
+        public override void AbilityActivation(Hero target, Hero caster, CombatLog log)
         {
-            Console.WriteLine($"Haz decidido usar tu habilidad : {Name}");
-            Console.WriteLine($"Curacion : {Defense} , Costo Energia : {Cost} , Usos : {PointsUse}/{PointUseBase}");
+            log.LogMessage("======================================================================");
+            log.LogMessage("[Defense]");
+            log.LogMessage($"Has decidido usar tu habilidad : {Name}");
+            log.LogMessage($"Defensa : {Defense} , Costo Energia : {Cost} , Usos : {PointsUse}/{PointUseBase}");
 
             caster.Defense += Defense;
             PointsUse -= 1;

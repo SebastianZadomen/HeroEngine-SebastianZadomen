@@ -1,4 +1,5 @@
 ﻿using HeroEngine.Model.Heroes;
+using HeroEngine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,14 @@ namespace HeroEngine.Model.Ability
             Type = TypeSkills.Soporte;
         }
 
-        public override void AbilityActivation(Hero target, Hero caster)
+        public override void AbilityActivation(Hero target, Hero caster, CombatLog log)
         {
-            Console.WriteLine($"Haz decidido usar tu habilidad : {Name}");
-            Console.WriteLine($"Curacion : {Healing} , Costo Energia : {Cost} , Usos : {PointsUse}/{PointUseBase}");
+            log.LogMessage("======================================================================");
+            log.LogMessage("[Support]");
+            log.LogMessage($"Has decidido usar tu habilidad : {Name}");
+            log.LogMessage($"Curacion : {Healing} , Costo Energia : {Cost} , Usos : {PointsUse}/{PointUseBase}");
+            log.LogMessage("======================================================================");
+
 
             caster.Health += Healing;
             PointsUse -= 1;

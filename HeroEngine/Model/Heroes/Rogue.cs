@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HeroEngine.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,16 +30,16 @@ namespace HeroEngine.Model.Heroes
             Energy = EnergyMax;
             Dagas = 0;
         }
-        public override bool Attack(Hero target)
+        public override bool Attack(Hero target, CombatLog log)
         {
-            if (!base.Attack(target))
+            if (!base.Attack(target, log))
             {
                 return false;
             }
-            
-            Console.Write($"{Name} ataca !! Dagas : {Dagas}, ");
-            int damage = DamageCritical() + SneakAttack + (Dagas * Multiplier);
-            target.TakeDamage(damage);
+
+            log.LogMessage($"{Name} ataca !! Dagas : {Dagas}");
+            int damage = DamageCritical(log) + SneakAttack + (Dagas * Multiplier);
+            target.TakeDamage(damage, log);
 
             if (Dagas < 5)
             {
@@ -50,16 +51,20 @@ namespace HeroEngine.Model.Heroes
             }
 
             return true;
-        } 
-        public override bool TakeDamage(int damage)
+        }
+
+
+        public override bool TakeDamage(int damage, CombatLog log)
         {
-            if (!base.TakeDamage(damage))
+            if (!base.TakeDamage(damage, log))
             {
                 return false;
             }
 
             Health -= Math.Max(0, damage - Defense);
-            Console.WriteLine($"{Name} has recibido {damage} de daño. \nHP : {Health}/{HealthMax}");
+            log.LogMessage($"{Name} ha recibido {damage} de daño. \nHP : {Health}/{HealthMax}");
+            log.LogMessage("======================================================================");
+
             Defense = 0;
             return true;
         }

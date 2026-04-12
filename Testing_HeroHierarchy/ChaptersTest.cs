@@ -4,6 +4,7 @@ using static System.Net.Mime.MediaTypeNames;
 using HeroEngine.Model;
 using HeroEngine.Model.Heroes;
 using HeroEngine.Model.Ability;
+using HeroEngine.Model.Enemy;
 
 namespace Testing_HeroEnginner
 {
@@ -19,8 +20,8 @@ namespace Testing_HeroEnginner
 
             Assert.Equal(expectedName, warrior.Name);
             Assert.Equal(expectedLevel, warrior.Level);
-            Assert.True(warrior.Health > 0); 
-            Assert.True(warrior.Armor > 0);  
+            Assert.True(warrior.Health > 0);
+            Assert.True(warrior.Armor > 0);
         }
 
         [Fact]
@@ -33,7 +34,7 @@ namespace Testing_HeroEnginner
 
             Assert.Equal(expectedName, mage.Name);
             Assert.Equal(expectedLevel, mage.Level);
-            Assert.True(mage.Mana > 0);  
+            Assert.True(mage.Mana > 0);
         }
 
         [Fact]
@@ -42,7 +43,7 @@ namespace Testing_HeroEnginner
             string expectedName = "Talon";
             int expectedLevel = 3;
 
-            
+
             var rogue = new Rogue(expectedName, expectedLevel);
 
             Assert.Equal(expectedName, rogue.Name);
@@ -54,19 +55,19 @@ namespace Testing_HeroEnginner
         [Fact]
         public void AttackSkill_AbilityActivation_ReducesTargetHealth()
         {
-           
+
             Warrior attacker = new Warrior("Garen", 1);
             Mage target = new Mage("Lux", 1);
 
-           
 
-            AttackSkills slash = new AttackSkills("Corte Básico",RarityType.Comun,10,10,20);
+
+            AttackSkills slash = new AttackSkills("Corte Básico", RarityType.Comun, 10, 10, 20);
             int resultHealth = target.Health - slash.Damage;
 
 
             slash.AbilityActivation(target, attacker);
 
-            Assert.Equal(resultHealth,target.Health );
+            Assert.Equal(resultHealth, target.Health);
         }
         [Fact]
         public void SupportSkills_AbilityActivation_IncreaseTargetHealth()
@@ -78,7 +79,7 @@ namespace Testing_HeroEnginner
 
 
             AttackSkills slash = new AttackSkills("Corte Básico", RarityType.Comun, 10, 10, 20);
-            SupportSkills healer = new SupportSkills("Oración de sanación", RarityType.Comun,10,10,15);
+            SupportSkills healer = new SupportSkills("Oración de sanación", RarityType.Comun, 10, 10, 15);
 
             int resultHealth = lux.Health - slash.Damage;
             lux.TakeDamage(slash.Damage);
@@ -107,5 +108,44 @@ namespace Testing_HeroEnginner
             Assert.Equal(resultHealth, talon.Health);
         }
     }
+    public class EnemyTests_Chapter
+    {
+        [Fact]
+        public void Enemy_Health_UseAttacktSkills()
+        {
+            Boss boss = new Boss("Rey Demonio", 5);
+            Mage target = new Mage("Lux", 1);
 
+
+            AttackSkills slash = new AttackSkills("Corte Letal", RarityType.Comun, 10, 10, 30);
+            boss.Skills[0] = slash;
+            boss.AbilityCooldowns[0] = 0;
+
+            int resultHealth = target.Health - slash.Damage;
+
+            boss.EnemyUseSkills(target);
+
+            Assert.Equal(resultHealth, target.Health);
+        }
+
+        [Fact]
+        public void Enemy_Health_UseSupportSkills()
+        {
+            Boss boss = new Boss("Rey Demonio", 5);
+            Warrior target = new Warrior("Garen", 1);
+
+            boss.Health = 10;
+
+            SupportSkills heal = new SupportSkills("Poción Oscura", RarityType.Comun, 10, 10, 25);
+            boss.Skills[0] = heal;
+            boss.AbilityCooldowns[0] = 0;
+
+            int resultHealth = boss.Health + 25;
+
+            boss.EnemyUseSkills(target);
+
+            Assert.Equal(resultHealth, boss.Health);
+        }
+
+    }
 }
